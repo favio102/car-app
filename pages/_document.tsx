@@ -1,5 +1,6 @@
 import { Footer, Navbar } from "@/components";
 import { Html, Head, Main, NextScript } from "next/document";
+import { } from "@headlessui/react";
 
 export default function Document() {
   return (
