@@ -1,6 +1,8 @@
 import { CustomFilter, Hero, SearchBar } from "@/components";
+import { fetchCars } from "@/utils";
 
-export default function Home() {
+export default function Home({ allCars }) {
+  console.log(allCars);
   return (
     <main className="overflow-hidden">
       <Hero />
@@ -20,4 +22,13 @@ export default function Home() {
       </div>
     </main>
   );
+}
+
+export async function getServerSideProps() {
+  const allCars = await fetchCars();
+  return {
+    props: {
+      allCars,
+    },
+  };
 }
