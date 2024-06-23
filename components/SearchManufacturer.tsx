@@ -5,6 +5,7 @@ import {
   ComboboxInput,
   Transition,
   ComboboxOption,
+  ComboboxOptions,
 } from "@headlessui/react";
 import Image from "next/image";
 import React, { Fragment, useState } from "react";
@@ -28,7 +29,7 @@ const SearchManufacturer = ({
 
   return (
     <div className="search-manufacturer">
-      <Combobox>
+      <Combobox value={manufacturer} onChange={setManufacturer}>
         <div className="relative w-full">
           <ComboboxButton className="absolute top-[14px]">
             <Image
@@ -41,7 +42,7 @@ const SearchManufacturer = ({
           </ComboboxButton>
           <ComboboxInput
             className="search-manufacturer__input"
-            placeholder="Voslkswagen"
+            placeholder="Volkswagen"
             displayValue={(manufacturer: string) => manufacturer}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -52,23 +53,40 @@ const SearchManufacturer = ({
             leaveTo="opacity-0"
             afterLeave={() => setQuery("")}
           >
-            <ComboboxOption>
-              {
-                filteredManufacturers.map((item) => (
-                  <ComboboxOption
-                    key={item}
-                    className={({ active }) =>
-                      `relative search-manufacturer__option ${
-                        active ? "bg-primary-blue text-white" : "text-gray-900"
-                      }`
-                    }
-                    value={item}
-                  >
-                    {item}
-                  </ComboboxOption>
-                ))
-              }
-            </ComboboxOption>
+            <ComboboxOptions>
+              {filteredManufacturers.map((item) => (
+                <ComboboxOption
+                  key={item}
+                  className={({ active }) =>
+                    `relative search-manufacturer__option ${
+                      active ? "bg-primary-blue text-white" : "text-gray-900"
+                    }`
+                  }
+                  value={item}
+                >
+                  {({ selected, active }) => (
+                    <>
+                      <span
+                        className={`block truncate ${
+                          selected ? "font-medium" : "font-normal"
+                        }`}
+                      >
+                        {item}
+                      </span>
+
+                      {/* Show an active blue background color if the option is selected */}
+                      {selected ? (
+                        <span
+                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                            active ? "text-white" : "text-pribg-primary-purple"
+                          }`}
+                        ></span>
+                      ) : null}
+                    </>
+                  )}
+                </ComboboxOption>
+              ))}
+            </ComboboxOptions>
           </Transition>
         </div>
       </Combobox>
