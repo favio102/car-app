@@ -31,9 +31,7 @@ const CarCard = ({ car }: CarCardProps) => {
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
           src="/hero.png"
-          width={50}
-          height={50}
-        //   fill
+          fill
           priority
           className="object-contain"
           alt=""
@@ -73,7 +71,11 @@ const CarCard = ({ car }: CarCardProps) => {
           />
         </div>
       </div>
-      <CarDetails />
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
