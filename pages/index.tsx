@@ -16,7 +16,7 @@ export default function Home({ allCars }) {
 
         <div className="home__filters">
           <SearchBar />
-          <div className="home_filters-container">
+          <div className="home__filter-container">
             <CustomFilter title="fuel" options={fuels} />
             <CustomFilter title="year" options={yearsOfProduction} />
           </div>
