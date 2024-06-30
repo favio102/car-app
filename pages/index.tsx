@@ -24,8 +24,8 @@ export default function Home({ allCars }) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) =>(
-                <CarCard car={car}/>
+              {allCars?.map((car) => (
+                <CarCard car={car} key={car.id} />
               ))}
             </div>
           </section>
@@ -40,8 +40,14 @@ export default function Home({ allCars }) {
   );
 }
 
-export async function getServerSideProps() {
-  const allCars = await fetchCars();
+export async function getServerSideProps({ query }) {
+  const allCars = await fetchCars({
+    manufacturer: query.manufacturer || "",
+    year: query.year || 2025,
+    fuel: query.fuel || "",
+    limit: query.limit || 20,
+    model: query.model || "",
+  });
   return {
     props: {
       allCars,
