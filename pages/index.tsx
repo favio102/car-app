@@ -1,9 +1,11 @@
-import { CarCard, CustomFilter, Hero, SearchBar } from "@/components";
+import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
+import { useRouter } from "next/router";
 
 export default function Home({ allCars }) {
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
+  const router = useRouter();
 
   return (
     <main className="overflow-hidden">
@@ -29,10 +31,16 @@ export default function Home({ allCars }) {
                 <CarCard car={car} key={car.id} />
               ))}
             </div>
+            <ShowMore
+              pageNumber={(Number(router.query.pageNumber) || 10) / 10}
+              isNext={(Number(router.query.limit) || 10) > allCars.length}
+            />
           </section>
         ) : (
           <div className="home__error-container">
-            <h2 className="text-black text-xl font-bold">no cars</h2>
+            <h2 className="text-black text-xl font-bold text-center">
+              No results... <br /> Try to search a different car
+            </h2>
             <p>{allCars?.message}</p>
           </div>
         )}
