@@ -25,6 +25,7 @@ const CustomButton = ({
             alt={rightIcon}
             fill
             className="object-contain"
+            // style={{ width: 'auto', height: 'auto' }}
           />
         </div>
       )}

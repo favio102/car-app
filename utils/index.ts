@@ -32,13 +32,17 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   const url = new URL(`https://cdn.imagin.studio/getimage`);
   const { make, year, model } = car;
+  const customerKey = process.env.KEY_CAR_IMAGE_API || "default_customer-key";
 
-  url.searchParams.append("customer", `${process.env.KEY_CAR_IMAGE_API}`);
+  url.searchParams.append("customer", customerKey);
   url.searchParams.append("make", make);
   url.searchParams.append("modelFamily", model.split(" ")[0]);
   url.searchParams.append("zoomType", "fullscreen");
   url.searchParams.append("modelYear", `${year}`);
-  url.searchParams.append("angle", `${angle}`);
+  if (angle) {
+    url.searchParams.append("angle", `${angle}`);
+  }
+
   return url.toString();
 };
 

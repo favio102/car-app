@@ -28,10 +28,9 @@ export default function Home({ allCars }) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => {
-                // console.log("key:", car.id);
-                return <CarCard car={car} key={car.id} />;
-              })}
+              {allCars?.map((car) => (
+                <CarCard car={car} key={car.id} />
+              ))}
             </div>
             <ShowMore
               pageNumber={(Number(router.query.pageNumber) || 10) / 10}
