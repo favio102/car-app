@@ -2,6 +2,7 @@ import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home({ allCars }) {
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
@@ -27,9 +28,10 @@ export default function Home({ allCars }) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard car={car} key={car.id} />
-              ))}
+              {allCars?.map((car) => {
+                // console.log("key:", car.id);
+                return <CarCard car={car} key={car.id} />;
+              })}
             </div>
             <ShowMore
               pageNumber={(Number(router.query.pageNumber) || 10) / 10}
@@ -57,9 +59,11 @@ export async function getServerSideProps({ query }) {
     limit: query.limit || 20,
     model: query.model || "",
   });
+
+  const allCarsWithIds = allCars.map((car) => ({ ...car, id: uuidv4() }));
   return {
     props: {
-      allCars,
+      allCars: allCarsWithIds,
     },
   };
 }
