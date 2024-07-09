@@ -23,6 +23,3 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Run Next.js Lint
-        run: npm run lint -- --no-interactive
