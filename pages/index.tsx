@@ -33,7 +33,7 @@ export default function Home({ allCars }) {
               ))}
             </div>
             <ShowMore
-              pageNumber={(Number(router.query.pageNumber) || 10) / 10}
+              pageNumber={(Number(router.query.limit) || 10) / 10}
               isNext={(Number(router.query.limit) || 10) > allCars.length}
             />
           </section>
@@ -55,7 +55,7 @@ export async function getServerSideProps({ query }) {
     manufacturer: query.manufacturer || "",
     year: query.year || 2025,
     fuel: query.fuel || "",
-    limit: query.limit || 20,
+    limit: query.limit || 10,
     model: query.model || "",
   });
 
