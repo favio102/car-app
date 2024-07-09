@@ -3,8 +3,16 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
-import { HomeProps, FilterProps } from "@/types";
+import { CarProps, HomeProps, QueryParamsProps } from "@/types";
 import { GetServerSidePropsContext } from "next";
+
+interface QueryParams {
+  manufacturer?: string;
+  year?: number;
+  fuel?: string;
+  limit?: number;
+  model?: string;
+}
 
 export default function Home({ allCars }: HomeProps) {
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
@@ -51,7 +59,9 @@ export default function Home({ allCars }: HomeProps) {
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const query = context.query as Partial<QueryParamsProps>;
+  
   const allCars = await fetchCars({
     manufacturer: query.manufacturer || "",
     year: query.year || 2025,
@@ -60,7 +70,7 @@ export async function getServerSideProps({ query }) {
     model: query.model || "",
   });
 
-  const allCarsWithIds = allCars.map((car) => ({ ...car, id: uuidv4() }));
+  const allCarsWithIds = allCars.map((car: CarProps) => ({ ...car, id: uuidv4() }));
   return {
     props: {
       allCars: allCarsWithIds,

@@ -31,7 +31,7 @@ export interface CarProps {
   id: string;
 }
 
-export interface FilterProps {
+export interface QueryParamsProps {
   manufacturer: string;
   year: number;
   fuel: string;
@@ -55,6 +55,6 @@ export interface ShowMoreProps {
 }
 
 export interface HomeProps {
-  searchParams: FilterProps;
+  searchParams: QueryParamsProps;
   allCars: CarProps[];
 }
