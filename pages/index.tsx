@@ -3,8 +3,10 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import { HomeProps, FilterProps } from "@/types";
+import { GetServerSidePropsContext } from "next";
 
-export default function Home({ allCars }) {
+export default function Home({ allCars }: HomeProps) {
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   const router = useRouter();
 
@@ -42,7 +44,6 @@ export default function Home({ allCars }) {
             <h2 className="text-black text-xl font-bold text-center">
               No results... <br /> Try to search a different car
             </h2>
-            <p>{allCars?.message}</p>
           </div>
         )}
       </div>
