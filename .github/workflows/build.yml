@@ -1,4 +1,4 @@
-name: Lint
+name: Build
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,3 +23,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Check Build Status
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Build successful!"
+          else
+            echo "Build failed!"
+            exit 1
+          fi
